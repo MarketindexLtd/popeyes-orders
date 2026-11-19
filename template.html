@@ -38,7 +38,7 @@ nav{position:sticky;top:0;z-index:100;background:var(--wh);border-bottom:1px sol
 
 /* FILTERS */
 .filters{position:sticky;top:54px;z-index:90;background:var(--wh);border-top:1px solid var(--bd);border-bottom:1px solid var(--bd)}
-.filters .wrap{padding-top:14px;padding-bottom:14px;display:grid;grid-template-columns:2fr 1.4fr 1.4fr auto;gap:12px;align-items:end}
+.filters .wrap{padding-top:14px;padding-bottom:14px;display:grid;grid-template-columns:1fr 1fr auto;gap:12px;align-items:end}
 .f{display:flex;flex-direction:column;gap:5px;min-width:0}
 .f label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--lg)}
 input[type=search],input[type=date],select{width:100%;height:38px;padding:0 12px;border:1px solid var(--bd);border-radius:4px;background:var(--of);min-width:0}
@@ -153,7 +153,6 @@ body.locked>nav,body.locked>header,body.locked>section,body.locked>main{visibili
   .hero{padding:36px 0 24px}
   .hero-grid{grid-template-columns:1fr;gap:28px}
   .filters .wrap{grid-template-columns:1fr 1fr}
-  .filters .f.search{grid-column:1/-1}
   .filters .f.reset{grid-column:1/-1}
   .filters .f.reset label{display:none}
   .stat-row{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -205,7 +204,6 @@ body.locked>nav,body.locked>header,body.locked>section,body.locked>main{visibili
 
 <section class="filters" aria-label="Filters">
   <div class="wrap">
-    <div class="f search"><label for="q">Search</label><input id="q" type="search" placeholder="Order number, store, name or product" autocomplete="off"></div>
     <div class="f"><label for="fStore">Store</label><select id="fStore"><option value="">All stores</option></select></div>
     <div class="f"><label for="fProd">Product</label><select id="fProd"><option value="">All products</option></select></div>
     <div class="f reset"><label>&nbsp;</label><button class="btn" id="reset" type="button">Clear filters</button></div>
@@ -296,12 +294,10 @@ function presetRange(p){
   return['',''];
 }
 function filtered(skipDate){
-  const q=state.q.trim().toLowerCase().split(/\s+/).filter(Boolean);
   return DATA.filter(o=>{
     if(state.store&&o.s!==state.store)return false;
     if(state.prod&&!o.i.some(x=>x[0]===state.prod))return false;
     if(!skipDate){if(state.from&&o.ymd<state.from)return false;if(state.to&&o.ymd>state.to)return false;}
-    for(const w of q){if(!o.hay.includes(w))return false}
     return true;
   });
 }
@@ -402,11 +398,9 @@ function render(){
   ({orders:renderOrders,stores:renderStores,products:renderProducts})[state.tab](rows);
   document.querySelectorAll('#presets .chip').forEach(c=>c.setAttribute('aria-pressed',c.dataset.p===state.preset));
   $('dFrom').value=state.from;$('dTo').value=state.to;
-  if($('q').value!==state.q)$('q').value=state.q;
   $('fStore').value=state.store;$('fProd').value=state.prod;
 }
 const reset=()=>{state.limit=50;state.open.clear()};
-let qt;$('q').addEventListener('input',e=>{clearTimeout(qt);qt=setTimeout(()=>{state.q=e.target.value;reset();render()},150)});
 $('fStore').addEventListener('change',e=>{state.store=e.target.value;reset();render()});
 $('fProd').addEventListener('change',e=>{state.prod=e.target.value;reset();render()});
 $('dFrom').addEventListener('change',e=>{state.from=e.target.value;state.preset='custom';reset();render()});
