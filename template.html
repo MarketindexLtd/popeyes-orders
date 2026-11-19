@@ -20,7 +20,7 @@ input,select,button{font:inherit;color:inherit}
 
 /* NAV */
 nav{position:sticky;top:0;z-index:100;background:var(--wh);border-bottom:1px solid var(--bd);height:54px;display:flex;align-items:center;padding:0 40px;justify-content:space-between;gap:24px}
-.logo img{height:32px;display:block}
+.logo img{height:30px;width:auto;display:block}
 .nav-meta{font-size:12px;font-weight:600;color:var(--lg);letter-spacing:.04em;text-transform:uppercase}
 
 .wrap{max-width:1180px;margin:0 auto;padding:0 40px}
@@ -135,7 +135,7 @@ body.locked>nav,body.locked>header,body.locked>section,body.locked>main{visibili
 .lock[hidden]{display:none}
 .lock-card{background:var(--wh);border:1px solid var(--bd);border-radius:4px;padding:40px 36px;width:100%;max-width:440px;position:relative;display:flex;flex-direction:column}
 .lock-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--or)}
-.lock-logo{height:44px;width:44px;margin-bottom:24px}
+.lock-logo{height:40px;width:auto;align-self:flex-start;margin-bottom:28px}
 .lock-card .kicker{margin-bottom:12px}
 .lock-card h2{font-size:28px;font-weight:900;line-height:1.1;letter-spacing:-.8px;margin-bottom:26px}
 .lock-card h2 .or{color:var(--or)}
@@ -176,7 +176,7 @@ body.locked>nav,body.locked>header,body.locked>section,body.locked>main{visibili
 
 <div class="lock" id="lock" hidden>
   <form class="lock-card" id="lockForm" autocomplete="off">
-    <img src="https://d2gt4h1eeousrn.cloudfront.net/100929014/header-fcHJMd/KKBeRnQ-600x600.webp" alt="Popeyes Marketing" class="lock-logo">
+    <img src="assets/logo.webp" alt="Popeyes Marketing" class="lock-logo">
     <span class="kicker">Order report · Confidential</span>
     <h2>Enter the password to <span class="or">view orders.</span></h2>
     <label for="pw" class="lock-l">Password</label>
@@ -188,7 +188,7 @@ body.locked>nav,body.locked>header,body.locked>section,body.locked>main{visibili
 </div>
 
 <nav>
-  <span class="logo"><img src="https://d2gt4h1eeousrn.cloudfront.net/100929014/header-fcHJMd/KKBeRnQ-600x600.webp" alt="Popeyes Marketing"></span>
+  <span class="logo"><img src="assets/logo.webp" alt="Popeyes Marketing"></span>
   <span class="nav-meta" id="navMeta"></span>
 </nav>
 
