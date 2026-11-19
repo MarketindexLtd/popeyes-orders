@@ -14,3 +14,6 @@ const out=a.filter(o=>s[pc(o)]).map(o=>{
 }).sort((x,y)=>y.t-x.t);
 fs.writeFileSync('orders-data.json',JSON.stringify(out));
 console.log(out.length, (fs.statSync('orders-data.json').size/1024).toFixed(0)+'KB', out.filter(o=>o.nt).length,'with notes');
+const TEST=new Set(['FY42HH','PR60PP']);
+const un=a.filter(o=>!s[pc(o)]&&!TEST.has(pc(o)));
+if(un.length){console.warn(`WARNING: ${un.length} orders skipped, postcode not in stores.json:`);un.forEach(o=>console.warn(' #'+o.orderNumber,pc(o),(o.shippingPerson||{}).name,o.email));}
