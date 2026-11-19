@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Popeyes Marketing Orders</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --or:#FF7D00;--pu:#911987;--rd:#D90F06;--tq:#00B2A9;
+  --bk:#111111;--wh:#FFFFFF;--of:#F9F6F2;--gy:#F0EDE8;
+  --bd:#E5E0D8;--mg:#666666;--lg:#999999;--or-soft:#FFF1E3;
+}
+html{-webkit-text-size-adjust:100%}
+body{font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--of);color:var(--bk);-webkit-font-smoothing:antialiased;overflow-x:hidden;font-size:14px;line-height:1.45}
+input,select,button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--or);outline-offset:2px}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:var(--wh);border-bottom:1px solid var(--bd);height:54px;display:flex;align-items:center;padding:0 40px;justify-content:space-between;gap:24px}
+.logo img{height:32px;display:block}
+.nav-meta{font-size:12px;font-weight:600;color:var(--lg);letter-spacing:.04em;text-transform:uppercase}
+
+.wrap{max-width:1180px;margin:0 auto;padding:0 40px}
+
+/* HERO */
+.hero{padding:56px 0 36px}
+.kicker{display:block;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--or);margin-bottom:20px}
+.hero-grid{display:grid;grid-template-columns:1fr 340px;gap:60px;align-items:end}
+.hero h1{font-size:clamp(40px,5.5vw,76px);font-weight:900;line-height:1.02;letter-spacing:-2px}
+.hero h1 .or{color:var(--or)}
+.hero-desc{font-size:16px;color:var(--mg);line-height:1.7;margin-top:20px;max-width:560px}
+.fact{display:flex;justify-content:space-between;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--bd);font-size:13px}
+.fact:first-child{border-top:1px solid var(--bd)}
+.fact .l{color:var(--lg)}.fact .v{font-weight:700}
+
+/* FILTERS */
+.filters{position:sticky;top:54px;z-index:90;background:var(--wh);border-top:1px solid var(--bd);border-bottom:1px solid var(--bd)}
+.filters .wrap{padding-top:14px;padding-bottom:14px;display:grid;grid-template-columns:2fr 1.4fr 1.4fr auto;gap:12px;align-items:end}
+.f{display:flex;flex-direction:column;gap:5px;min-width:0}
+.f label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--lg)}
+input[type=search],input[type=date],select{width:100%;height:38px;padding:0 12px;border:1px solid var(--bd);border-radius:4px;background:var(--of);min-width:0}
+input[type=search]:focus,select:focus,input[type=date]:focus{border-color:var(--or);outline:none;background:var(--wh)}
+.btn{height:38px;padding:0 18px;border-radius:100px;border:1px solid var(--bd);background:var(--wh);cursor:pointer;white-space:nowrap;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.btn:hover{border-color:var(--or);color:var(--or)}
+.btn.solid{background:var(--or);border-color:var(--or);color:var(--wh)}
+.btn.solid:hover{background:#E87000;color:var(--wh)}
+.presets{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.chip{height:30px;padding:0 14px;border-radius:100px;border:1px solid var(--bd);background:var(--wh);cursor:pointer;font-size:12px;font-weight:600;color:var(--mg)}
+.chip:hover{border-color:var(--or);color:var(--or)}
+.chip[aria-pressed=true]{background:var(--or);border-color:var(--or);color:var(--wh)}
+.custom{display:flex;gap:6px;align-items:center;margin-left:6px}
+.custom input{height:30px;width:150px;font-size:12px;border-radius:100px;padding:0 12px}
+.custom span{color:var(--lg);font-size:12px}
+
+/* STATS */
+.stat-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--bd);border:1px solid var(--bd);border-radius:4px;overflow:hidden;margin-top:28px}
+.stat-cell{background:var(--wh);padding:26px 24px;position:relative;min-width:0}
+.stat-cell::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.stat-cell:nth-child(1)::before{background:var(--or)}.stat-cell:nth-child(1) .stat-n{color:var(--or)}
+.stat-cell:nth-child(2)::before{background:var(--tq)}.stat-cell:nth-child(2) .stat-n{color:var(--tq)}
+.stat-cell:nth-child(3)::before{background:var(--pu)}.stat-cell:nth-child(3) .stat-n{color:var(--pu)}
+.stat-cell:nth-child(4)::before{background:var(--rd)}.stat-cell:nth-child(4) .stat-n{color:var(--rd)}
+.stat-n{font-size:clamp(28px,3.4vw,42px);font-weight:900;line-height:1;margin-bottom:8px;letter-spacing:-1.5px;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stat-l{font-size:11px;font-weight:600;color:var(--lg);text-transform:uppercase;letter-spacing:.06em}
+.stat-h{font-size:12px;color:var(--mg);margin-top:4px}
+
+/* PANELS */
+.panel{background:var(--wh);border:1px solid var(--bd);border-radius:4px;margin-top:24px;min-width:0;overflow:hidden}
+.panel-h{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;padding:22px 24px 4px}
+.panel-h h2{font-size:22px;font-weight:900;letter-spacing:-.5px}
+.panel-h h2 .or{color:var(--or)}
+.seg{display:inline-flex;border:1px solid var(--bd);border-radius:100px;overflow:hidden}
+.seg button{border:0;background:transparent;padding:6px 16px;cursor:pointer;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--lg)}
+.seg button[aria-pressed=true]{background:var(--or);color:var(--wh)}
+.chart{padding:8px 12px 4px;overflow-x:auto}
+.chart svg{display:block;width:100%;min-width:640px;height:230px}
+.hint{font-size:12px;color:var(--lg);padding:0 24px 16px}
+.bar{fill:var(--or);cursor:pointer}.bar:hover{fill:#E87000}.bar.dim{fill:var(--gy)}
+.axis{fill:var(--lg);font-size:11px;font-family:Inter,sans-serif}
+.grid{stroke:var(--bd);stroke-width:1}
+
+.tabs{display:flex;gap:4px;padding:0 24px;border-bottom:1px solid var(--bd);overflow-x:auto}
+.tab{border:0;background:transparent;padding:18px 14px 14px;cursor:pointer;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--lg);border-bottom:3px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.tab:hover{color:var(--bk)}
+.tab[aria-selected=true]{color:var(--bk);border-bottom-color:var(--or)}
+.tab .n{color:var(--or);margin-left:6px;font-variant-numeric:tabular-nums}
+
+.tablebox{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+th{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--lg);text-align:left;padding:14px 16px;border-bottom:1px solid var(--bd);white-space:nowrap;background:var(--of)}
+th.sort{cursor:pointer;user-select:none}th.sort:hover{color:var(--bk)}
+th .ar{display:inline-block;width:10px;color:var(--or)}
+td{padding:13px 16px;border-bottom:1px solid var(--bd);vertical-align:top}
+tbody tr:last-child td{border-bottom:0}
+.num{text-align:right}
+.row{cursor:pointer}
+.row:hover td{background:var(--of)}
+.row.open td{background:var(--or-soft)}
+.ono{font-weight:800}
+.store{font-weight:700}
+.small{font-size:12px;color:var(--lg)}
+.items-sum{max-width:420px;color:var(--mg);overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.detail td{background:var(--of);padding:0;border-bottom:1px solid var(--bd)}
+.det{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:32px;padding:22px 24px 26px;border-left:3px solid var(--or)}
+.det h3{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--or);margin-bottom:10px}
+.lines{background:transparent}
+.lines td{padding:8px 0;border-bottom:1px dashed var(--bd);background:transparent!important}
+.lines td.q{width:48px;color:var(--lg);font-weight:600}
+.lines .opt{font-size:12px;color:var(--mg)}
+.tot{display:grid;grid-template-columns:1fr auto;gap:5px 16px;margin-top:12px;max-width:260px;margin-left:auto}
+.tot .g{font-weight:800;border-top:1px solid var(--bd);padding-top:6px}
+.kv{display:grid;gap:14px;align-content:start}
+.kv div{min-width:0;overflow-wrap:anywhere}
+.kv .l{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--lg);margin-bottom:2px}
+.note{background:var(--wh);border:1px solid var(--bd);border-left:3px solid var(--or);border-radius:4px;padding:10px 12px;white-space:pre-wrap;overflow-wrap:anywhere}
+.link{color:var(--bk);background:none;border:0;padding:0;cursor:pointer;font:inherit;font-weight:700;text-align:left}
+.link:hover{color:var(--or)}
+.more{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:12px;padding:18px;color:var(--lg);font-size:13px;border-top:1px solid var(--bd)}
+.empty{padding:48px 16px;text-align:center;color:var(--lg)}
+.meter{height:6px;border-radius:3px;background:var(--gy);min-width:90px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--or);border-radius:3px}
+.src{font-size:12px;color:var(--lg);padding:22px 0 44px;line-height:1.6}
+
+footer{background:var(--or);padding:18px 40px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+footer p{font-size:12px;font-weight:600;color:rgba(255,255,255,.8)}
+footer strong{color:var(--wh)}
+
+/* LOCK */
+body.locked{overflow:hidden}
+body.locked>nav,body.locked>header,body.locked>section,body.locked>main{visibility:hidden}
+.lock{position:fixed;inset:0;z-index:200;background:var(--of);display:flex;align-items:center;justify-content:center;padding:20px}
+.lock[hidden]{display:none}
+.lock-card{background:var(--wh);border:1px solid var(--bd);border-radius:4px;padding:40px 36px;width:100%;max-width:440px;position:relative;display:flex;flex-direction:column}
+.lock-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--or)}
+.lock-logo{height:44px;width:44px;margin-bottom:24px}
+.lock-card .kicker{margin-bottom:12px}
+.lock-card h2{font-size:28px;font-weight:900;line-height:1.1;letter-spacing:-.8px;margin-bottom:26px}
+.lock-card h2 .or{color:var(--or)}
+.lock-l{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--lg);margin-bottom:6px}
+.lock-card input[type=password]{height:44px;padding:0 14px;border:1px solid var(--bd);border-radius:4px;background:var(--of);font-size:15px}
+.lock-card input[type=password]:focus{border-color:var(--or);outline:none;background:var(--wh)}
+.rem{display:flex;gap:8px;align-items:center;font-size:13px;color:var(--mg);margin:14px 0 20px;cursor:pointer}
+.rem input{accent-color:var(--or);width:16px;height:16px}
+.lock-card .btn{height:44px;font-size:13px}
+.lock-err{color:var(--rd);font-size:13px;font-weight:600;min-height:18px;margin-top:12px}
+
+@media(max-width:900px){
+  nav{padding:0 16px}
+  .wrap{padding:0 16px}
+  .hero{padding:36px 0 24px}
+  .hero-grid{grid-template-columns:1fr;gap:28px}
+  .filters .wrap{grid-template-columns:1fr 1fr}
+  .filters .f.search{grid-column:1/-1}
+  .filters .f.reset{grid-column:1/-1}
+  .filters .f.reset label{display:none}
+  .stat-row{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .det{grid-template-columns:1fr;gap:20px;padding:18px 16px 20px}
+  .hide-m{display:none}
+  .panel-h{padding:18px 16px 4px}.tabs{padding:0 12px}.hint{padding:0 16px 14px}
+  td,th{padding:12px 10px}
+  footer{flex-direction:column;gap:4px;padding:16px 20px;text-align:center}
+}
+@media(max-width:560px){
+  .nav-meta{display:none}
+  .filters{position:static}
+  .custom{margin-left:0}
+  .custom input{width:128px}
+}
+@media(max-width:360px){.stat-row{grid-template-columns:1fr}}
+</style>
+</head>
+<body class="locked">
+
+<div class="lock" id="lock" hidden>
+  <form class="lock-card" id="lockForm" autocomplete="off">
+    <img src="https://d2gt4h1eeousrn.cloudfront.net/100929014/header-fcHJMd/KKBeRnQ-600x600.webp" alt="Popeyes Marketing" class="lock-logo">
+    <span class="kicker">Order report · Confidential</span>
+    <h2>Enter the password to <span class="or">view orders.</span></h2>
+    <label for="pw" class="lock-l">Password</label>
+    <input id="pw" type="password" required autocomplete="current-password">
+    <label class="rem"><input type="checkbox" id="remember" checked> Remember on this device</label>
+    <button class="btn solid" id="unlockBtn" type="submit">Unlock</button>
+    <p class="lock-err" id="lockErr" role="alert"></p>
+  </form>
+</div>
+
+<nav>
+  <span class="logo"><img src="https://d2gt4h1eeousrn.cloudfront.net/100929014/header-fcHJMd/KKBeRnQ-600x600.webp" alt="Popeyes Marketing"></span>
+  <span class="nav-meta" id="navMeta"></span>
+</nav>
+
+<header class="wrap hero">
+  <span class="kicker">Order report · popeyes-marketing.com</span>
+  <div class="hero-grid">
+    <div>
+      <h1>Every store order, <span class="or">in one place.</span></h1>
+      <p class="hero-desc">All marketing, POS and training material orders placed by UK restaurants. Filter by date, store or product, and click any order to see exactly what was ordered.</p>
+    </div>
+    <div id="facts"></div>
+  </div>
+</header>
+
+<section class="filters" aria-label="Filters">
+  <div class="wrap">
+    <div class="f search"><label for="q">Search</label><input id="q" type="search" placeholder="Order number, store, name or product" autocomplete="off"></div>
+    <div class="f"><label for="fStore">Store</label><select id="fStore"><option value="">All stores</option></select></div>
+    <div class="f"><label for="fProd">Product</label><select id="fProd"><option value="">All products</option></select></div>
+    <div class="f reset"><label>&nbsp;</label><button class="btn" id="reset" type="button">Clear filters</button></div>
+    <div class="presets" id="presets" role="group" aria-label="Date range">
+      <button class="chip" data-p="all" aria-pressed="true" type="button">All time</button>
+      <button class="chip" data-p="month" aria-pressed="false" type="button">This month</button>
+      <button class="chip" data-p="lastmonth" aria-pressed="false" type="button">Last month</button>
+      <button class="chip" data-p="30" aria-pressed="false" type="button">Last 30 days</button>
+      <button class="chip" data-p="90" aria-pressed="false" type="button">Last 3 months</button>
+      <button class="chip" data-p="year" aria-pressed="false" type="button">This year</button>
+      <button class="chip" data-p="lastyear" aria-pressed="false" type="button">Last year</button>
+      <span class="custom"><input id="dFrom" type="date" aria-label="From date"><span>to</span><input id="dTo" type="date" aria-label="To date"></span>
+    </div>
+  </div>
+</section>
+
+<main class="wrap">
+  <div class="stat-row" id="kpis"></div>
+
+  <section class="panel">
+    <div class="panel-h"><h2 id="chartTitle">Spend by month</h2>
+      <div class="seg" role="group" aria-label="Chart measure"><button type="button" data-m="spend" aria-pressed="true">Spend</button><button type="button" data-m="orders" aria-pressed="false">Orders</button></div>
+    </div>
+    <div class="chart"><svg id="chart" role="img" aria-label="Monthly chart"></svg></div>
+    <div class="hint">Click a month to filter to it.</div>
+  </section>
+
+  <section class="panel">
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" data-t="orders" aria-selected="true" type="button">Orders<span class="n" id="nOrders"></span></button>
+      <button class="tab" role="tab" data-t="stores" aria-selected="false" type="button">By store<span class="n" id="nStores"></span></button>
+      <button class="tab" role="tab" data-t="products" aria-selected="false" type="button">By product<span class="n" id="nProds"></span></button>
+    </div>
+    <div class="tablebox" id="tbl"></div>
+    <div class="more" id="more"></div>
+  </section>
+
+  <p class="src" id="src"></p>
+</main>
+
+<footer>
+  <p>Prepared by <strong>Marketindex Ltd</strong> &nbsp;·&nbsp; Confidential &nbsp;·&nbsp; Prepared exclusively for Popeyes UK</p>
+  <p><strong>popeyes-marketing.com</strong></p>
+</footer>
+
+<script>
+const SNAP = "/*SNAP*/";
+const ENC = /*ENC*/null;
+function start(DATA){
+const TZ='Europe/London';
+const gbp=new Intl.NumberFormat('en-GB',{style:'currency',currency:'GBP'});
+const int=new Intl.NumberFormat('en-GB');
+const dFmt=new Intl.DateTimeFormat('en-GB',{timeZone:TZ,day:'numeric',month:'short',year:'numeric'});
+const tFmt=new Intl.DateTimeFormat('en-GB',{timeZone:TZ,hour:'2-digit',minute:'2-digit'});
+const ymdFmt=new Intl.DateTimeFormat('en-CA',{timeZone:TZ,year:'numeric',month:'2-digit',day:'2-digit'});
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const $=id=>document.getElementById(id);
+
+DATA.forEach(o=>{o.ymd=ymdFmt.format(o.t*1000);o.ym=o.ymd.slice(0,7);o.q=o.i.reduce((a,x)=>a+x[1],0);
+  o.hay=(o.n+' '+o.s+' '+o.c+' '+o.e+' '+o.a+' '+o.i.map(x=>x[0]+' '+x[3]).join(' ')+' '+o.nt).toLowerCase();});
+
+const state={q:'',store:'',prod:'',from:'',to:'',preset:'all',tab:'orders',measure:'spend',sort:{orders:['t',-1],stores:['spend',-1],products:['qty',-1]},limit:50,open:new Set()};
+
+const stores=[...new Set(DATA.map(o=>o.s))].sort((a,b)=>a.localeCompare(b));
+const prods=[...new Set(DATA.flatMap(o=>o.i.map(x=>x[0])))].sort((a,b)=>a.localeCompare(b));
+const addOpts=(sel,arr)=>arr.forEach(v=>{const op=document.createElement('option');op.value=v;op.textContent=v;sel.appendChild(op)});
+addOpts($('fStore'),stores);addOpts($('fProd'),prods);
+
+const today=ymdFmt.format(Date.now());
+const minD=DATA.reduce((m,o)=>o.ymd<m?o.ymd:m,today);
+const snapTxt=dFmt.format(new Date(SNAP));
+$('dFrom').min=$('dTo').min=minD;$('dFrom').max=$('dTo').max=today;
+$('navMeta').textContent='Updated '+snapTxt;
+const allSpend=DATA.reduce((a,o)=>a+o.tot,0);
+$('facts').innerHTML=[['Orders',int.format(DATA.length)],['Stores',stores.length],['Total spend',gbp.format(allSpend)],['First order',dFmt.format(new Date(minD+'T12:00:00Z'))],['Updated',snapTxt]]
+  .map(([l,v])=>`<div class="fact"><span class="l">${l}</span><span class="v">${esc(v)}</span></div>`).join('');
+$('src').textContent='Source: popeyes-marketing.com order records, taken '+snapTxt+'. All amounts in GBP including VAT and shipping unless marked. Internal test orders are excluded. Stores are grouped by delivery address.';
+
+function shift(ymd,days){const d=new Date(ymd+'T12:00:00Z');d.setUTCDate(d.getUTCDate()+days);return d.toISOString().slice(0,10)}
+function presetRange(p){
+  const y=+today.slice(0,4),m=+today.slice(5,7);const pad=n=>String(n).padStart(2,'0');
+  if(p==='month')return[today.slice(0,8)+'01',today];
+  if(p==='lastmonth'){const ly=m===1?y-1:y,lm=m===1?12:m-1;const last=new Date(Date.UTC(ly,lm,0)).getUTCDate();return[`${ly}-${pad(lm)}-01`,`${ly}-${pad(lm)}-${pad(last)}`]}
+  if(p==='30')return[shift(today,-29),today];
+  if(p==='90')return[shift(today,-89),today];
+  if(p==='year')return[`${y}-01-01`,today];
+  if(p==='lastyear')return[`${y-1}-01-01`,`${y-1}-12-31`];
+  return['',''];
+}
+function filtered(skipDate){
+  const q=state.q.trim().toLowerCase().split(/\s+/).filter(Boolean);
+  return DATA.filter(o=>{
+    if(state.store&&o.s!==state.store)return false;
+    if(state.prod&&!o.i.some(x=>x[0]===state.prod))return false;
+    if(!skipDate){if(state.from&&o.ymd<state.from)return false;if(state.to&&o.ymd>state.to)return false;}
+    for(const w of q){if(!o.hay.includes(w))return false}
+    return true;
+  });
+}
+function renderKpis(rows){
+  const spend=rows.reduce((a,o)=>a+o.tot,0);
+  const st=new Set(rows.map(o=>o.s)).size;
+  let items=0,pVal=0;rows.forEach(o=>o.i.forEach(x=>{if(!state.prod||x[0]===state.prod){items+=x[1];pVal+=x[2]}}));
+  const latest=rows.reduce((m,o)=>o.t>m?o.t:m,0);
+  const k=[
+    [gbp.format(spend),'Total spend','inc. VAT and shipping'],
+    [int.format(rows.length),'Orders',rows.length?'latest '+dFmt.format(latest*1000):'none in this range'],
+    [int.format(st),'Stores ordering','of '+stores.length+' stores'],
+    state.prod?[int.format(items),'Units of this product',gbp.format(pVal)+' ex. VAT']:[int.format(items),'Items ordered',rows.length?gbp.format(spend/rows.length)+' average order':'–']
+  ];
+  $('kpis').innerHTML=k.map(([n,l,h])=>`<div class="stat-cell"><div class="stat-n">${esc(n)}</div><div class="stat-l">${esc(l)}</div><div class="stat-h">${esc(h)}</div></div>`).join('');
+}
+function niceMax(v){if(v<=0)return 1;const p=Math.pow(10,Math.floor(Math.log10(v)));const n=v/p;return (n<=1?1:n<=2?2:n<=2.5?2.5:n<=5?5:10)*p}
+function renderChart(){
+  const rows=filtered(true);
+  const months=[];let [y,m]=minD.slice(0,7).split('-').map(Number);const end=today.slice(0,7);
+  while(true){const k=`${y}-${String(m).padStart(2,'0')}`;months.push(k);if(k>=end)break;m++;if(m>12){m=1;y++}}
+  const agg=Object.fromEntries(months.map(k=>[k,0]));
+  rows.forEach(o=>{if(o.ym in agg)agg[o.ym]+=state.measure==='spend'?o.tot:1});
+  const svg=$('chart');const W=Math.max(svg.clientWidth||900,640),H=230,L=58,R=10,T=14,B=28;
+  svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  const max=niceMax(Math.max(...Object.values(agg)));
+  const iw=W-L-R,ih=H-T-B,bw=iw/months.length;
+  const fmt=v=>state.measure==='spend'?(v>=1000?'£'+(v/1000).toFixed(v%1000?1:0)+'k':'£'+v):String(v);
+  let s='';
+  for(let i=0;i<=4;i++){const v=max*i/4,yy=T+ih-ih*i/4;s+=`<line class="grid" x1="${L}" x2="${W-R}" y1="${yy}" y2="${yy}"/><text class="axis" x="${L-8}" y="${yy+4}" text-anchor="end">${fmt(Math.round(v*100)/100)}</text>`}
+  const inRange=k=>{const a=k+'-01',b=k+'-31';return(!state.from||b>=state.from)&&(!state.to||a<=state.to)};
+  const mFmt=new Intl.DateTimeFormat('en-GB',{month:'short',year:'numeric',timeZone:'UTC'});
+  months.forEach((k,i)=>{
+    const v=agg[k],h=ih*v/max,x=L+i*bw+bw*.15,w=bw*.7;
+    const label=mFmt.format(new Date(k+'-15T12:00:00Z'));
+    s+=`<rect class="bar${inRange(k)?'':' dim'}" data-k="${k}" x="${x.toFixed(1)}" y="${(T+ih-h).toFixed(1)}" width="${w.toFixed(1)}" height="${Math.max(h,v?1.5:0).toFixed(1)}" rx="2"><title>${label}: ${state.measure==='spend'?gbp.format(v):v+' orders'}</title></rect>`;
+    const mm=k.slice(5);
+    if(mm==='01'||i===0||(+mm%3===1))s+=`<text class="axis" x="${(L+i*bw+bw/2).toFixed(1)}" y="${H-10}" text-anchor="middle">${mm==='01'||i===0?label.split(' ')[0]+' ’'+k.slice(2,4):label.split(' ')[0]}</text>`;
+  });
+  svg.innerHTML=s;
+  $('chartTitle').innerHTML=state.measure==='spend'?'Spend <span class="or">by month</span>':'Orders <span class="or">by month</span>';
+}
+function arrow(tab,key){const [k,d]=state.sort[tab];return k===key?(d>0?'▲':'▼'):''}
+function th(tab,key,label,cls=''){return `<th class="sort ${cls}" data-sort="${key}" data-tab="${tab}" scope="col">${label} <span class="ar">${arrow(tab,key)}</span></th>`}
+function sorter(tab,getters){const [k,d]=state.sort[tab];const g=getters[k];return (a,b)=>{const x=g(a),y=g(b);return (typeof x==='string'?x.localeCompare(y):x-y)*d}}
+
+function renderOrders(rows){
+  rows=[...rows].sort(sorter('orders',{t:o=>o.t,n:o=>o.n,s:o=>o.s,tot:o=>o.tot}));
+  if(!rows.length){$('tbl').innerHTML='<div class="empty">No orders match these filters.</div>';$('more').innerHTML='';return}
+  const shown=rows.slice(0,state.limit);
+  let h=`<table><thead><tr>${th('orders','n','Order')}${th('orders','t','Date')}${th('orders','s','Store')}<th scope="col" class="hide-m">Ordered by</th><th scope="col" class="hide-m">Items</th>${th('orders','tot','Total','num')}</tr></thead><tbody>`;
+  for(const o of shown){
+    const open=state.open.has(o.n);
+    const summary=o.i.map(x=>`${x[1]}× ${x[0]}`).join(', ');
+    h+=`<tr class="row${open?' open':''}" data-n="${o.n}" tabindex="0" aria-expanded="${open}"><td class="ono">#${o.n}</td><td>${esc(dFmt.format(o.t*1000))}<div class="small">${esc(tFmt.format(o.t*1000))}</div></td><td class="store">${esc(o.s)}</td><td class="hide-m">${esc(o.c)}<div class="small">${esc(o.e)}</div></td><td class="hide-m"><div class="items-sum" title="${esc(summary)}">${esc(summary)}</div></td><td class="num"><strong>${gbp.format(o.tot)}</strong><div class="small">${o.q} item${o.q===1?'':'s'}</div></td></tr>`;
+    if(open)h+=`<tr class="detail"><td colspan="6">${detail(o)}</td></tr>`;
+  }
+  $('tbl').innerHTML=h+'</tbody></table>';
+  $('more').innerHTML=`Showing ${int.format(shown.length)} of ${int.format(rows.length)} orders`+(rows.length>shown.length?` <button class="btn solid" type="button" id="moreBtn">Show ${Math.min(100,rows.length-shown.length)} more</button> <button class="btn" type="button" id="allBtn">Show all</button>`:'');
+}
+function detail(o){
+  const lines=o.i.map(x=>`<tr><td class="q">${x[1]}×</td><td>${esc(x[0])}${x[3]?`<div class="opt">${esc(x[3])}</div>`:''}</td><td class="num">${gbp.format(x[2])}</td></tr>`).join('');
+  return `<div class="det"><div><h3>Items</h3><table class="lines"><tbody>${lines}</tbody></table>
+  <div class="tot"><span>Subtotal</span><span class="num">${gbp.format(o.sub)}</span><span>Shipping</span><span class="num">${gbp.format(o.sh)}</span><span>VAT</span><span class="num">${gbp.format(o.tx)}</span><span class="g">Total</span><span class="num g">${gbp.format(o.tot)}</span></div></div>
+  <div class="kv"><div><div class="l">Store</div><button class="link" type="button" data-store="${esc(o.s)}">${esc(o.s)}</button></div>
+  <div><div class="l">Ordered by</div>${esc(o.c)}<br>${esc(o.e)}${o.ph?'<br>'+esc(o.ph):''}</div>
+  <div><div class="l">Delivery address</div>${esc(o.a)}</div>
+  <div><div class="l">Placed</div>${esc(dFmt.format(o.t*1000))} at ${esc(tFmt.format(o.t*1000))}</div>
+  ${o.nt?`<div><div class="l">Order note</div><div class="note">${esc(o.nt)}</div></div>`:''}</div></div>`;
+}
+function renderStores(rows){
+  const m={};rows.forEach(o=>{const s=m[o.s]||(m[o.s]={s:o.s,orders:0,spend:0,last:0});s.orders++;s.spend+=o.tot;if(o.t>s.last)s.last=o.t});
+  const arr=Object.values(m).sort(sorter('stores',{s:x=>x.s,orders:x=>x.orders,spend:x=>x.spend,avg:x=>x.spend/x.orders,last:x=>x.last}));
+  if(!arr.length){$('tbl').innerHTML='<div class="empty">No stores match these filters.</div>';$('more').innerHTML='';return}
+  const top=Math.max(...arr.map(x=>x.spend));
+  let h=`<table><thead><tr>${th('stores','s','Store')}${th('stores','orders','Orders','num')}${th('stores','spend','Spend','num')}<th class="hide-m" scope="col"></th>${th('stores','avg','Avg order','num')}${th('stores','last','Last order')}</tr></thead><tbody>`;
+  arr.forEach(x=>{h+=`<tr><td><button class="link" type="button" data-store="${esc(x.s)}">${esc(x.s)}</button></td><td class="num">${x.orders}</td><td class="num">${gbp.format(x.spend)}</td><td class="hide-m"><div class="meter"><i style="width:${(x.spend/top*100).toFixed(1)}%"></i></div></td><td class="num">${gbp.format(x.spend/x.orders)}</td><td>${esc(dFmt.format(x.last*1000))}</td></tr>`});
+  $('tbl').innerHTML=h+'</tbody></table>';
+  $('more').textContent=`${arr.length} stores. Click a store to see its orders.`;
+}
+function renderProducts(rows){
+  const m={};rows.forEach(o=>o.i.forEach(x=>{if(state.prod&&x[0]!==state.prod)return;const p=m[x[0]]||(m[x[0]]={p:x[0],qty:0,orders:new Set,stores:new Set,val:0});p.qty+=x[1];p.orders.add(o.n);p.stores.add(o.s);p.val+=x[2]}));
+  const arr=Object.values(m).map(p=>({...p,orders:p.orders.size,stores:p.stores.size})).sort(sorter('products',{p:x=>x.p,qty:x=>x.qty,orders:x=>x.orders,stores:x=>x.stores,val:x=>x.val}));
+  if(!arr.length){$('tbl').innerHTML='<div class="empty">No products match these filters.</div>';$('more').innerHTML='';return}
+  const top=Math.max(...arr.map(x=>x.qty));
+  let h=`<table><thead><tr>${th('products','p','Product')}${th('products','qty','Units','num')}<th class="hide-m" scope="col"></th>${th('products','orders','Orders','num')}${th('products','stores','Stores','num')}${th('products','val','Value ex. VAT','num')}</tr></thead><tbody>`;
+  arr.forEach(x=>{h+=`<tr><td><button class="link" type="button" data-prod="${esc(x.p)}">${esc(x.p)}</button></td><td class="num">${int.format(x.qty)}</td><td class="hide-m"><div class="meter"><i style="width:${(x.qty/top*100).toFixed(1)}%"></i></div></td><td class="num">${x.orders}</td><td class="num">${x.stores}</td><td class="num">${gbp.format(x.val)}</td></tr>`});
+  $('tbl').innerHTML=h+'</tbody></table>';
+  $('more').textContent=`${arr.length} products. Click a product to see the orders it appears in.`;
+}
+function render(){
+  const rows=filtered(false);
+  renderKpis(rows);renderChart();
+  $('nOrders').textContent=int.format(rows.length);
+  $('nStores').textContent=new Set(rows.map(o=>o.s)).size;
+  $('nProds').textContent=state.prod?1:new Set(rows.flatMap(o=>o.i.map(x=>x[0]))).size;
+  document.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-selected',t.dataset.t===state.tab));
+  ({orders:renderOrders,stores:renderStores,products:renderProducts})[state.tab](rows);
+  document.querySelectorAll('#presets .chip').forEach(c=>c.setAttribute('aria-pressed',c.dataset.p===state.preset));
+  $('dFrom').value=state.from;$('dTo').value=state.to;
+  if($('q').value!==state.q)$('q').value=state.q;
+  $('fStore').value=state.store;$('fProd').value=state.prod;
+}
+const reset=()=>{state.limit=50;state.open.clear()};
+let qt;$('q').addEventListener('input',e=>{clearTimeout(qt);qt=setTimeout(()=>{state.q=e.target.value;reset();render()},150)});
+$('fStore').addEventListener('change',e=>{state.store=e.target.value;reset();render()});
+$('fProd').addEventListener('change',e=>{state.prod=e.target.value;reset();render()});
+$('dFrom').addEventListener('change',e=>{state.from=e.target.value;state.preset='custom';reset();render()});
+$('dTo').addEventListener('change',e=>{state.to=e.target.value;state.preset='custom';reset();render()});
+$('presets').addEventListener('click',e=>{const c=e.target.closest('.chip');if(!c)return;state.preset=c.dataset.p;[state.from,state.to]=presetRange(c.dataset.p);reset();render()});
+$('reset').addEventListener('click',()=>{Object.assign(state,{q:'',store:'',prod:'',from:'',to:'',preset:'all'});reset();render()});
+document.querySelector('.seg').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;state.measure=b.dataset.m;document.querySelectorAll('.seg button').forEach(x=>x.setAttribute('aria-pressed',x===b));renderChart()});
+$('chart').addEventListener('click',e=>{const r=e.target.closest('.bar');if(!r)return;const k=r.dataset.k;const [y,m]=k.split('-').map(Number);state.from=k+'-01';state.to=k+'-'+String(new Date(Date.UTC(y,m,0)).getUTCDate()).padStart(2,'0');state.preset='custom';reset();render()});
+document.querySelector('.tabs').addEventListener('click',e=>{const t=e.target.closest('.tab');if(!t)return;state.tab=t.dataset.t;reset();render()});
+$('tbl').addEventListener('click',e=>{
+  const s=e.target.closest('th.sort');
+  if(s){const tab=s.dataset.tab,k=s.dataset.sort,cur=state.sort[tab];state.sort[tab]=[k,cur[0]===k?-cur[1]:(['s','p'].includes(k)?1:-1)];render();return}
+  const st=e.target.closest('[data-store]');if(st){state.store=st.dataset.store;state.tab='orders';reset();render();window.scrollTo({top:0,behavior:'smooth'});return}
+  const pr=e.target.closest('[data-prod]');if(pr){state.prod=pr.dataset.prod;state.tab='orders';reset();render();return}
+  const row=e.target.closest('.row');if(row){const n=+row.dataset.n;state.open.has(n)?state.open.delete(n):state.open.add(n);render()}
+});
+$('tbl').addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.classList.contains('row')){e.preventDefault();const n=e.target.dataset.n;e.target.click();requestAnimationFrame(()=>document.querySelector(`.row[data-n="${n}"]`)?.focus())}});
+$('more').addEventListener('click',e=>{if(e.target.id==='moreBtn'){state.limit+=100;render()}if(e.target.id==='allBtn'){state.limit=1e9;render()}});
+let rt;window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(renderChart,120)});
+render();
+}
+
+// ---- unlock: data is AES-GCM encrypted with a PBKDF2 key derived from the password ----
+(function(){
+const KEY_STORE='pmo-key-v1';
+const b64=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+const toB64=buf=>btoa(String.fromCharCode(...new Uint8Array(buf)));
+const lock=document.getElementById('lock'),form=document.getElementById('lockForm'),pw=document.getElementById('pw'),err=document.getElementById('lockErr'),btn=document.getElementById('unlockBtn');
+async function decryptWith(key){
+  const plain=await crypto.subtle.decrypt({name:'AES-GCM',iv:b64(ENC.iv)},key,b64(ENC.ct));
+  return JSON.parse(new TextDecoder().decode(plain));
+}
+async function derive(pass){
+  const base=await crypto.subtle.importKey('raw',new TextEncoder().encode(pass),'PBKDF2',false,['deriveKey']);
+  return crypto.subtle.deriveKey({name:'PBKDF2',salt:b64(ENC.salt),iterations:ENC.it,hash:'SHA-256'},base,{name:'AES-GCM',length:256},true,['decrypt']);
+}
+function open(data){lock.remove();document.body.classList.remove('locked');start(data)}
+(async()=>{
+  try{const raw=localStorage.getItem(KEY_STORE);if(raw){const key=await crypto.subtle.importKey('raw',b64(raw),'AES-GCM',true,['decrypt']);open(await decryptWith(key));return}}catch(e){try{localStorage.removeItem(KEY_STORE)}catch(_){}}
+  lock.hidden=false;pw.focus();
+})();
+form.addEventListener('submit',async e=>{
+  e.preventDefault();err.textContent='';btn.disabled=true;btn.textContent='Unlocking…';
+  try{
+    const key=await derive(pw.value);const data=await decryptWith(key);
+    if(document.getElementById('remember').checked){try{localStorage.setItem(KEY_STORE,toB64(await crypto.subtle.exportKey('raw',key)))}catch(_){}}
+    open(data);
+  }catch(x){err.textContent='That password is not right. Please try again.';btn.disabled=false;btn.textContent='Unlock';pw.select()}
+});
+})();
+</script>
+</body>
+</html>
