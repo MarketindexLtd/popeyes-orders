@@ -15,6 +15,8 @@ for path in (sys.argv[1:] or ['jobs.xlsx']):
 lab=re.compile(r'\bweb?\s*order\b',re.I)
 storeNum=re.compile(r'^\s*[A-Za-z][A-Za-z .\'&-]+\s+\d{2,3}\s*$')
 ECWID_START=dt.datetime(2024,10,1)
+# Jobs that combine several Ecwid web orders for one store (checked by hand 2026-11-25)
+COMBINED_WEB={11767,11671,11967}
 def g(r,k): v=r[H[k]] if k in H else None;return '' if v is None else str(v).strip()
 out=[];why=collections.Counter()
 seen=set()
@@ -29,6 +31,7 @@ for H,r in jobs:
     for x in re.findall(r'(?<![\dx.])(\d{2,3})(?![\dmx.])',note+' | '+desc):
       o=by.get(int(x))
       if o and abs((o['total'] or 0)-total)<0.02: online='match';break
+  if not online and r[H['Job No']] in COMBINED_WEB: online='combined'
   if not online and r[H['Date']]>=ECWID_START and (storeNum.match(note) or storeNum.match(ob)): online='storenum'
   why[online or 'direct']+=1
   ref=''
