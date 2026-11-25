@@ -3,3 +3,6 @@ orders-data.json
 .password
 node_modules/
 formal-preview.html
+jobs.xlsx
+jobs-data.json
+jobs-other.xlsx
