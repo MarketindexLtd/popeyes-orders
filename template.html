@@ -161,6 +161,7 @@ body.locked{overflow:hidden}
 body.locked>nav,body.locked>header,body.locked>section,body.locked>main,body.locked>div:not(.lock){visibility:hidden}
 .lock{position:fixed;inset:0;z-index:200;background:var(--of);display:flex;align-items:center;justify-content:center;padding:20px}
 .lock[hidden]{display:none}
+.views[hidden]{display:none}
 .lock-card{background:var(--wh);border:1px solid var(--bd);border-radius:4px;padding:40px 36px;width:100%;max-width:440px;position:relative;display:flex;flex-direction:column}
 .lock-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--or)}
 .lock-logo{height:40px;width:auto;align-self:flex-start;margin-bottom:28px}
@@ -234,9 +235,8 @@ body.locked>nav,body.locked>header,body.locked>section,body.locked>main,body.loc
     </div>
     <div id="facts"></div>
   </div>
-  <div class="views" role="tablist" aria-label="Report">
+  <div class="views" role="tablist" hidden aria-label="Report">
     <button class="view" role="tab" data-v="shop" aria-selected="true" type="button"><span class="vt">Online shop orders</span><span class="vs">Orders placed on popeyes-marketing.com</span></button>
-    <button class="view" role="tab" data-v="jobs" aria-selected="false" type="button"><span class="vt">Direct orders</span><span class="vs">Jobs placed with Marketindex directly, since 2021</span></button>
   </div>
 </header>
 
