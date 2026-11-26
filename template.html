@@ -235,8 +235,9 @@ body.locked>nav,body.locked>header,body.locked>section,body.locked>main,body.loc
     </div>
     <div id="facts"></div>
   </div>
-  <div class="views" role="tablist" hidden aria-label="Report">
+  <div class="views" role="tablist" aria-label="Report">
     <button class="view" role="tab" data-v="shop" aria-selected="true" type="button"><span class="vt">Online shop orders</span><span class="vs">Orders placed on popeyes-marketing.com</span></button>
+    <button class="view" role="tab" data-v="non" aria-selected="false" type="button"><span class="vt">Non-PopShop Orders</span><span class="vs">Orders placed with Marketindex outside popeyes-marketing.com</span></button>
   </div>
 </header>
 
@@ -284,37 +285,29 @@ body.locked>nav,body.locked>header,body.locked>section,body.locked>main,body.loc
 </main>
 </div>
 
-<div id="viewJobs" hidden>
-<section class="filters" aria-label="Job filters">
-  <div class="wrap jf">
-    <div class="f"><label for="jProd">Product</label><select id="jProd"><option value="">All products</option></select></div>
-    <div class="f reset"><label>&nbsp;</label><button class="btn" id="jReset" type="button">Clear filters</button></div>
-    <div class="presets" id="jYears" role="group" aria-label="Period"></div>
+<div id="viewNon" hidden>
+<section class="filters" aria-label="Non-PopShop filters">
+  <div class="wrap">
+    <div class="f"><label for="nStore">Store</label><select id="nStore"><option value="">All stores</option></select></div>
+    <div class="f"><label for="nProd">Product</label><select id="nProd"><option value="">All products</option></select></div>
+    <div class="f reset"><label>&nbsp;</label><button class="btn" id="nReset" type="button">Clear filters</button></div>
   </div>
 </section>
 
 <main class="wrap">
-  <div class="stat-row" id="jKpis"></div>
+  <div class="stat-row" id="nKpis"></div>
 
   <section class="panel">
-    <div class="panel-h"><h2 id="jChartTitle">Spend by month</h2>
-      <div class="seg" id="jSeg" role="group" aria-label="Chart measure"><button type="button" data-m="spend" aria-pressed="true">Spend</button><button type="button" data-m="jobs" aria-pressed="false">Jobs</button></div>
+    <div class="tabs" role="tablist" id="nTabs">
+      <button class="tab" role="tab" data-t="orders" aria-selected="true" type="button">Orders<span class="n" id="nnOrders"></span></button>
+      <button class="tab" role="tab" data-t="stores" aria-selected="false" type="button">By store<span class="n" id="nnStores"></span></button>
+      <button class="tab" role="tab" data-t="products" aria-selected="false" type="button">By product<span class="n" id="nnProds"></span></button>
     </div>
-    <div class="chart"><svg id="jChart" role="img" aria-label="Monthly jobs chart"></svg></div>
-    <div class="hint">Click a month to filter to it.</div>
+    <div class="tablebox" id="nTbl"></div>
+    <div class="more" id="nMore"></div>
   </section>
 
-  <section class="panel">
-    <div class="tabs" role="tablist" id="jTabs">
-      <button class="tab" role="tab" data-t="jobs" aria-selected="true" type="button">Jobs<span class="n" id="jnJobs"></span></button>
-      <button class="tab" role="tab" data-t="products" aria-selected="false" type="button">By product<span class="n" id="jnProds"></span></button>
-      <button class="tab" role="tab" data-t="years" aria-selected="false" type="button">By year</button>
-    </div>
-    <div class="tablebox" id="jTbl"></div>
-    <div class="more" id="jMore"></div>
-  </section>
-
-  <p class="src">Source: Marketindex job records for Popeyes (PLK UK Ltd plus franchisee and site accounts), October 2021 to November 2026. Shows jobs placed with us directly. Orders that came in through popeyes-marketing.com are under Online shop orders and are not repeated here. Amounts in GBP including VAT.</p>
+  <p class="src">Source: Marketindex list of Popeyes orders placed outside popeyes-marketing.com. Amounts in GBP, no VAT. Delivery is shown separately where charged. Items marked “price not listed” had no price in the list.</p>
 </main>
 </div>
 
@@ -468,7 +461,7 @@ function render(){
   $('nOrders').textContent=int.format(rows.length);
   $('nStores').textContent=new Set(rows.map(o=>o.s)).size;
   $('nProds').textContent=state.prod?1:new Set(rows.flatMap(o=>o.i.map(x=>x[0]))).size;
-  document.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-selected',t.dataset.t===state.tab));
+  document.querySelectorAll('#viewShop .tab').forEach(t=>t.setAttribute('aria-selected',t.dataset.t===state.tab));
   ({orders:renderOrders,stores:renderStores,products:renderProducts})[state.tab](rows);
   document.querySelectorAll('#presets .chip').forEach(c=>c.setAttribute('aria-pressed',c.dataset.p===state.preset));
   $('dFrom').value=state.from;$('dTo').value=state.to;
@@ -483,7 +476,7 @@ $('presets').addEventListener('click',e=>{const c=e.target.closest('.chip');if(!
 $('reset').addEventListener('click',()=>{Object.assign(state,{q:'',store:'',prod:'',from:'',to:'',preset:'all'});reset();render()});
 document.querySelector('.seg').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;state.measure=b.dataset.m;document.querySelectorAll('.seg button').forEach(x=>x.setAttribute('aria-pressed',x===b));renderChart()});
 $('chart').addEventListener('click',e=>{const r=e.target.closest('.bar');if(!r)return;const k=r.dataset.k;const [y,m]=k.split('-').map(Number);state.from=k+'-01';state.to=k+'-'+String(new Date(Date.UTC(y,m,0)).getUTCDate()).padStart(2,'0');state.preset='custom';reset();render()});
-document.querySelector('.tabs').addEventListener('click',e=>{const t=e.target.closest('.tab');if(!t)return;state.tab=t.dataset.t;reset();render()});
+document.querySelector('#viewShop .tabs').addEventListener('click',e=>{const t=e.target.closest('.tab');if(!t)return;state.tab=t.dataset.t;reset();render()});
 $('tbl').addEventListener('click',e=>{
   const s=e.target.closest('th.sort');
   if(s){const tab=s.dataset.tab,k=s.dataset.sort,cur=state.sort[tab];state.sort[tab]=[k,cur[0]===k?-cur[1]:(['s','p'].includes(k)?1:-1)];render();return}
@@ -497,153 +490,109 @@ let rt;window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(rend
 render();
 }
 
-// ---- job history view (Marketindex job records, online vs direct) ----
-function startJobs(JOBS){
+// ---- Non-PopShop orders (Marketindex list, one row per order, no VAT) ----
+function startNon(ROWS){
 const gbp=new Intl.NumberFormat('en-GB',{style:'currency',currency:'GBP'});
 const int=new Intl.NumberFormat('en-GB');
-const dFmt=new Intl.DateTimeFormat('en-GB',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'});
-const mFmt=new Intl.DateTimeFormat('en-GB',{month:'short',timeZone:'UTC'});
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const $=id=>document.getElementById(id);
-const fd=d=>dFmt.format(new Date(d+'T12:00:00Z'));
-const isCarrier=n=>/^carrier$/i.test(n.trim());
-JOBS.forEach(j=>{j.ym=j.d.slice(0,7);j.y=j.d.slice(0,4);j.who=j.ac&&!j.nt?j.ac:(j.nt||j.ob||'');});
-const S={chan:'all',prod:'',from:'',to:'',preset:'all',tab:'jobs',measure:'spend',sort:{jobs:['d',-1],products:['qty',-1],years:['y',-1]},limit:50,open:new Set()};
+const S={store:'',prod:'',tab:'orders',sort:{orders:['r',1],stores:['spend',-1],products:['qty',-1]},limit:50,open:new Set()};
 
 // view switch
 const views=document.querySelectorAll('.view');
 views.forEach(v=>v.addEventListener('click',()=>{
-  const isJobs=v.dataset.v==='jobs';
+  const isNon=v.dataset.v==='non';
   views.forEach(x=>x.setAttribute('aria-selected',x===v));
-  $('viewShop').hidden=isJobs;$('viewJobs').hidden=!isJobs;
+  $('viewShop').hidden=isNon;$('viewNon').hidden=!isNon;
   window.dispatchEvent(new Event('resize'));
 }));
 
-const prods=[...new Set(JOBS.flatMap(j=>j.l.map(l=>l[0]).filter(n=>n&&!isCarrier(n))))].sort((a,b)=>a.localeCompare(b));
-prods.forEach(p=>{const o=document.createElement('option');o.value=p;o.textContent=p.length>70?p.slice(0,68)+'…':p;$('jProd').appendChild(o)});
-const years=[...new Set(JOBS.map(j=>j.y))].sort().reverse();
-const minYm=JOBS.reduce((m,j)=>j.ym<m?j.ym:m,'9999'),maxYm=JOBS.reduce((m,j)=>j.ym>m?j.ym:m,'0000');
-$('jYears').innerHTML=`<button class="chip" data-p="all" aria-pressed="true" type="button">All time</button>`+years.map(y=>`<button class="chip" data-p="${y}" aria-pressed="false" type="button">${y}</button>`).join('')+`<span class="custom"><input id="jFrom" type="date" aria-label="From date"><span>to</span><input id="jTo" type="date" aria-label="To date"></span>`;
+const stores=[...new Set(ROWS.map(o=>o.s))].sort((a,b)=>a.localeCompare(b));
+const prods=[...new Set(ROWS.flatMap(o=>o.l.map(l=>l[0])))].sort((a,b)=>a.localeCompare(b));
+const addOpts=(sel,arr)=>arr.forEach(v=>{const op=document.createElement('option');op.value=v;op.textContent=v.length>70?v.slice(0,68)+'…':v;sel.appendChild(op)});
+addOpts($('nStore'),stores);addOpts($('nProd'),prods);
+const price=p=>p==null?'<span class="small">price not listed</span>':gbp.format(p);
 
-function filtered(skipDate){
-  return JOBS.filter(j=>{
-    if(S.chan==='online'&&!j.on)return false;
-    if(S.chan==='direct'&&j.on)return false;
-    if(S.prod&&!j.l.some(l=>l[0]===S.prod))return false;
-    if(!skipDate){if(S.from&&j.d<S.from)return false;if(S.to&&j.d>S.to)return false}
-    return true;
-  });
-}
+function filtered(){return ROWS.filter(o=>(!S.store||o.s===S.store)&&(!S.prod||o.l.some(l=>l[0]===S.prod)))}
 function kpis(rows){
-  const total=rows.reduce((s,j)=>s+j.tot,0);
-  const latest=rows.reduce((m,j)=>j.d>m?j.d:m,'');
+  const total=rows.reduce((a,o)=>a+o.tot,0);
   let k;
-  if(S.prod){let u=0,v=0;rows.forEach(j=>j.l.forEach(l=>{if(l[0]===S.prod){u+=l[1];v+=l[3]}}));
-    k=[[gbp.format(total),'Total spend','jobs including this product'],[int.format(rows.length),'Jobs',latest?'latest '+fd(latest):'none in this range'],[int.format(u),'Units of this product','across these jobs'],[gbp.format(v),'Product value','ex. VAT']];}
-  else{let u=0;rows.forEach(j=>j.l.forEach(l=>{if(!isCarrier(l[0]))u+=l[1]}));
-    k=[[gbp.format(total),'Total spend','inc. VAT'],[int.format(rows.length),'Jobs',latest?'latest '+fd(latest):'none in this range'],[rows.length?gbp.format(total/rows.length):'–','Average job','per job'],[int.format(u),'Items supplied','units across all jobs']];}
-  $('jKpis').innerHTML=k.map(([n,l,h])=>`<div class="stat-cell"><div class="stat-n">${esc(n)}</div><div class="stat-l">${esc(l)}</div><div class="stat-h">${esc(h)}</div></div>`).join('');
-}
-function niceMax(v){if(v<=0)return 1;const p=Math.pow(10,Math.floor(Math.log10(v)));const n=v/p;return (n<=1?1:n<=2?2:n<=2.5?2.5:n<=5?5:10)*p}
-function chart(){
-  const rows=filtered(true);const months=[];let [y,m]=minYm.split('-').map(Number);
-  while(true){const k=`${y}-${String(m).padStart(2,'0')}`;months.push(k);if(k>=maxYm)break;m++;if(m>12){m=1;y++}}
-  const A=Object.fromEntries(months.map(k=>[k,{on:0,di:0}]));
-  rows.forEach(j=>{if(A[j.ym])A[j.ym][j.on?'on':'di']+=S.measure==='spend'?j.tot:1});
-  const svg=$('jChart');const W=Math.max(svg.clientWidth||900,640),H=230,L=62,R=10,T=14,B=28;
-  svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
-  const max=niceMax(Math.max(...months.map(k=>A[k].on+A[k].di)));
-  const iw=W-L-R,ih=H-T-B,bw=iw/months.length;
-  const fmt=v=>S.measure==='spend'?(v>=1000?'£'+(v/1000).toFixed(v%1000?1:0)+'k':'£'+Math.round(v)):String(Math.round(v));
-  let s='';
-  for(let i=0;i<=4;i++){const v=max*i/4,yy=T+ih-ih*i/4;s+=`<line class="grid" x1="${L}" x2="${W-R}" y1="${yy}" y2="${yy}"/><text class="axis" x="${L-8}" y="${yy+4}" text-anchor="end">${fmt(v)}</text>`}
-  const inRange=k=>(!S.from||k+'-31'>=S.from)&&(!S.to||k+'-01'<=S.to);
-  months.forEach((k,i)=>{
-    const a=A[k],x=L+i*bw+bw*.12,w=bw*.76,hd=ih*a.di/max,ho=ih*a.on/max,dim=inRange(k)?'':' dim';
-    const lbl=mFmt.format(new Date(k+'-15T12:00:00Z'))+' '+k.slice(0,4);
-    const tip=`${lbl}: ${S.measure==='spend'?gbp.format(a.di):a.di+' job'+(a.di===1?'':'s')}`;
-    if(a.di)s+=`<rect class="bar${dim}" data-k="${k}" x="${x.toFixed(1)}" y="${(T+ih-hd).toFixed(1)}" width="${w.toFixed(1)}" height="${Math.max(hd,1.5).toFixed(1)}" rx="2"><title>${tip}</title></rect>`;
-    if(k.slice(5)==='01'||i===0)s+=`<text class="axis" x="${(L+i*bw+bw/2).toFixed(1)}" y="${H-10}" text-anchor="start">${k.slice(0,4)}</text>`;
-  });
-  svg.innerHTML=s;
-  $('jChartTitle').innerHTML=S.measure==='spend'?'Spend <span class="or">by month</span>':'Jobs <span class="or">by month</span>';
+  if(S.prod){let u=0,v=0;rows.forEach(o=>o.l.forEach(l=>{if(l[0]===S.prod){u+=l[1];v+=l[2]||0}}));
+    k=[[gbp.format(v),'Product value','no VAT'],[int.format(rows.length),'Orders','including this product'],[int.format(new Set(rows.map(o=>o.s)).size),'Stores','ordering this product'],[int.format(u),'Units','of this product']];}
+  else{let u=0;rows.forEach(o=>o.l.forEach(l=>u+=l[1]));
+    k=[[gbp.format(total),'Total spend','no VAT, includes delivery'],[int.format(rows.length),'Orders',rows.length?gbp.format(total/rows.length)+' average order':'–'],[int.format(new Set(rows.map(o=>o.s)).size),'Stores ordering','of '+stores.length+' stores'],[int.format(u),'Items ordered','units across all orders']];}
+  $('nKpis').innerHTML=k.map(([n,l,h])=>`<div class="stat-cell"><div class="stat-n">${esc(n)}</div><div class="stat-l">${esc(l)}</div><div class="stat-h">${esc(h)}</div></div>`).join('');
 }
 function arrow(t,k){const [a,d]=S.sort[t];return a===k?(d>0?'▲':'▼'):''}
 function th(t,k,l,c=''){return `<th class="sort ${c}" data-sort="${k}" data-tab="${t}" scope="col">${l} <span class="ar">${arrow(t,k)}</span></th>`}
-function sorter(t,g){const [k,d]=S.sort[t];const f=g[k];return (a,b)=>{const x=f(a),y=f(b);return (typeof x==='string'?x.localeCompare(y):x-y)*d||b.j-a.j}}
-const pill=j=>j.on?'<span class="pill p-on">Online</span>':'<span class="pill p-di">Direct</span>';
-function jobsTable(rows){
-  rows=[...rows].sort(sorter('jobs',{d:j=>j.d,j:j=>j.j,tot:j=>j.tot,who:j=>j.who.toLowerCase(),on:j=>j.on}));
-  if(!rows.length){$('jTbl').innerHTML='<div class="empty">No jobs match these filters.</div>';$('jMore').innerHTML='';return}
+function sorter(t,g){const [k,d]=S.sort[t];const f=g[k];return (a,b)=>{const x=f(a),y=f(b);return (typeof x==='string'?x.localeCompare(y):x-y)*d}}
+function ordersTable(rows){
+  rows=[...rows].sort(sorter('orders',{r:o=>o.r,s:o=>o.s,ob:o=>o.ob,tot:o=>o.tot}));
+  if(!rows.length){$('nTbl').innerHTML='<div class="empty">No orders match these filters.</div>';$('nMore').innerHTML='';return}
   const shown=rows.slice(0,S.limit);
-  let h=`<table><thead><tr>${th('jobs','j','Job')}${th('jobs','d','Date')}${th('jobs','who','Order / store','hide-m')}<th scope="col">Description</th>${th('jobs','tot','Total','num')}</tr></thead><tbody>`;
-  for(const j of shown){
-    const open=S.open.has(j.j);
-    h+=`<tr class="row${open?' open':''}" data-j="${j.j}" tabindex="0" aria-expanded="${open}"><td class="ono">${j.j}</td><td>${esc(fd(j.d))}</td><td class="hide-m store">${esc(j.who)||'<span class="small">–</span>'}</td><td><div class="jdesc" title="${esc(j.ds)}">${esc(j.ds)||'<span class="small">No description</span>'}</div></td><td class="num"><strong>${gbp.format(j.tot)}</strong></td></tr>`;
-    if(open)h+=`<tr class="detail"><td colspan="5">${detail(j)}</td></tr>`;
+  let h=`<table><thead><tr>${th('orders','r','Order')}${th('orders','s','Store')}${th('orders','ob','Ordered by','hide-m')}<th scope="col" class="hide-m">Items</th>${th('orders','tot','Total','num')}</tr></thead><tbody>`;
+  for(const o of shown){
+    const open=S.open.has(o.r),q=o.l.reduce((a,l)=>a+l[1],0);
+    const summary=o.l.map(l=>`${l[1]}× ${l[0]}`).join(', ');
+    h+=`<tr class="row${open?' open':''}" data-r="${o.r}" tabindex="0" aria-expanded="${open}"><td class="ono">${o.r}<div class="small">${esc(o.k)}</div></td><td class="store">${esc(o.s)}${o.x?`<div class="small">${esc(o.x)}</div>`:''}</td><td class="hide-m">${esc(o.ob)||'<span class="small">–</span>'}</td><td class="hide-m"><div class="items-sum" title="${esc(summary)}">${esc(summary)}</div></td><td class="num"><strong>${gbp.format(o.tot)}</strong><div class="small">${int.format(q)} item${q===1?'':'s'}</div></td></tr>`;
+    if(open)h+=`<tr class="detail"><td colspan="5">${detail(o)}</td></tr>`;
   }
-  $('jTbl').innerHTML=h+'</tbody></table>';
-  $('jMore').innerHTML=`Showing ${int.format(shown.length)} of ${int.format(rows.length)} jobs`+(rows.length>shown.length?` <button class="btn solid" type="button" data-more="1">Show ${Math.min(100,rows.length-shown.length)} more</button> <button class="btn" type="button" data-all="1">Show all</button>`:'');
+  $('nTbl').innerHTML=h+'</tbody></table>';
+  $('nMore').innerHTML=`Showing ${int.format(shown.length)} of ${int.format(rows.length)} orders`+(rows.length>shown.length?` <button class="btn solid" type="button" data-more="1">Show ${Math.min(100,rows.length-shown.length)} more</button> <button class="btn" type="button" data-all="1">Show all</button>`:'');
 }
-function detail(j){
-  const lines=j.l.filter(l=>!isCarrier(l[0])).map(l=>`<tr><td class="q">${l[1]}×</td><td>${esc(l[0])}<div class="opt">${gbp.format(l[2])} each</div></td><td class="num">${gbp.format(l[3])}</td></tr>`).join('');
-  return `<div class="det"><div><h3>Items</h3><table class="lines"><tbody>${lines||'<tr><td>No item breakdown</td></tr>'}</tbody></table>
-  <div class="tot"><span>Subtotal</span><span class="num">${gbp.format(j.sub)}</span><span>VAT</span><span class="num">${gbp.format(j.tx)}</span><span class="g">Total</span><span class="num g">${gbp.format(j.tot)}</span></div></div>
-  <div class="kv">
-  <div><div class="l">Account</div>${esc(j.ac||'PLK UK Ltd')}</div>
-  ${j.nt?`<div><div class="l">Store / order note</div>${esc(j.nt)}</div>`:''}
-  ${j.ob?`<div><div class="l">Ordered by</div>${esc(j.ob)}</div>`:''}
-  <div><div class="l">Job date</div>${esc(fd(j.d))}</div></div></div>`;
+function detail(o){
+  const lines=o.l.map(l=>`<tr><td class="q">${int.format(l[1])}×</td><td>${esc(l[0])}</td><td class="num">${price(l[2])}</td></tr>`).join('');
+  return `<div class="det"><div><h3>Items</h3><table class="lines"><tbody>${lines}</tbody></table>
+  <div class="tot"><span>Items</span><span class="num">${gbp.format(o.g)}</span>${o.c?`<span>Delivery</span><span class="num">${gbp.format(o.c)}</span>`:''}<span class="g">Total</span><span class="num g">${gbp.format(o.tot)}</span></div></div>
+  <div class="kv"><div><div class="l">Store</div><button class="link" type="button" data-store="${esc(o.s)}">${esc(o.s)}</button></div>
+  <div><div class="l">Type</div>${esc(o.k)}</div>
+  ${o.ob?`<div><div class="l">Ordered by</div>${esc(o.ob)}</div>`:''}
+  <div><div class="l">As listed</div>${esc(o.ds)}</div></div></div>`;
+}
+function storesTable(rows){
+  const m={};rows.forEach(o=>{const s=m[o.s]||(m[o.s]={s:o.s,orders:0,spend:0});s.orders++;s.spend+=o.tot});
+  const arr=Object.values(m).sort(sorter('stores',{s:x=>x.s,orders:x=>x.orders,spend:x=>x.spend,avg:x=>x.spend/x.orders}));
+  if(!arr.length){$('nTbl').innerHTML='<div class="empty">No stores match these filters.</div>';$('nMore').innerHTML='';return}
+  const top=Math.max(...arr.map(x=>x.spend));
+  let h=`<table><thead><tr>${th('stores','s','Store')}${th('stores','orders','Orders','num')}${th('stores','spend','Spend','num')}<th class="hide-m" scope="col"></th>${th('stores','avg','Avg order','num')}</tr></thead><tbody>`;
+  arr.forEach(x=>{h+=`<tr><td><button class="link" type="button" data-store="${esc(x.s)}">${esc(x.s)}</button></td><td class="num">${x.orders}</td><td class="num">${gbp.format(x.spend)}</td><td class="hide-m"><div class="meter"><i style="width:${(x.spend/top*100).toFixed(1)}%"></i></div></td><td class="num">${gbp.format(x.spend/x.orders)}</td></tr>`});
+  $('nTbl').innerHTML=h+'</tbody></table>';
+  $('nMore').textContent=`${arr.length} stores. Click a store to see its orders.`;
 }
 function prodTable(rows){
-  const m={};rows.forEach(j=>j.l.forEach(l=>{if(!l[0]||isCarrier(l[0]))return;if(S.prod&&l[0]!==S.prod)return;const p=m[l[0]]||(m[l[0]]={p:l[0],qty:0,jobs:new Set,val:0,on:0,di:0});p.qty+=l[1];p.jobs.add(j.j);p.val+=l[3];p[j.on?'on':'di']+=l[3]}));
-  const arr=Object.values(m).map(p=>({...p,jobs:p.jobs.size})).sort(sorter('products',{p:x=>x.p,qty:x=>x.qty,jobs:x=>x.jobs,val:x=>x.val}));
-  if(!arr.length){$('jTbl').innerHTML='<div class="empty">No products match these filters.</div>';$('jMore').innerHTML='';return}
-  const shown=arr.slice(0,S.limit),top=Math.max(...arr.map(x=>x.val));
-  let h=`<table><thead><tr>${th('products','p','Product')}${th('products','qty','Units','num')}${th('products','jobs','Jobs','num')}${th('products','val','Value ex. VAT','num')}<th class="hide-m" scope="col"></th></tr></thead><tbody>`;
-  shown.forEach(x=>{h+=`<tr><td><button class="link" type="button" data-prod="${esc(x.p)}">${esc(x.p)}</button></td><td class="num">${int.format(x.qty)}</td><td class="num">${x.jobs}</td><td class="num">${gbp.format(x.val)}</td><td class="hide-m"><div class="meter"><i style="width:${(x.val/top*100).toFixed(1)}%"></i></div></td></tr>`});
-  $('jTbl').innerHTML=h+'</tbody></table>';
-  $('jMore').innerHTML=`${int.format(arr.length)} products. Click a product to see the jobs it appears in.`+(arr.length>shown.length?` <button class="btn solid" type="button" data-more="1">Show more</button> <button class="btn" type="button" data-all="1">Show all</button>`:'');
-}
-function yearTable(rows){
-  const m={};rows.forEach(j=>{const y=m[j.y]||(m[j.y]={y:j.y,n:0,v:0});y.n++;y.v+=j.tot});
-  const arr=Object.values(m).sort(sorter('years',{y:x=>x.y}));
-  if(!arr.length){$('jTbl').innerHTML='<div class="empty">No jobs match these filters.</div>';$('jMore').innerHTML='';return}
-  const T={n:0,v:0};arr.forEach(x=>{T.n+=x.n;T.v+=x.v});const top=Math.max(...arr.map(x=>x.v));
-  const row=(x,b)=>`<tr${b?' style="font-weight:800"':''}><td>${b?'Total':`<button class="link" type="button" data-year="${x.y}">${x.y}</button>`}</td><td class="num">${x.n}</td><td class="num">${gbp.format(x.v)}</td><td class="hide-m">${b?'':`<div class="meter"><i style="width:${(x.v/top*100).toFixed(1)}%"></i></div>`}</td><td class="num">${gbp.format(x.v/x.n)}</td></tr>`;
-  $('jTbl').innerHTML=`<table><thead><tr>${th('years','y','Year')}<th class="num" scope="col">Jobs</th><th class="num" scope="col">Spend</th><th class="hide-m" scope="col"></th><th class="num" scope="col">Avg job</th></tr></thead><tbody>${arr.map(x=>row(x)).join('')}${arr.length>1?row(T,true):''}</tbody></table>`;
-  $('jMore').textContent='Click a year to filter to it.';
+  const m={};rows.forEach(o=>o.l.forEach(l=>{if(S.prod&&l[0]!==S.prod)return;const p=m[l[0]]||(m[l[0]]={p:l[0],qty:0,orders:new Set,stores:new Set,val:0});p.qty+=l[1];p.orders.add(o.r);p.stores.add(o.s);p.val+=l[2]||0}));
+  const arr=Object.values(m).map(p=>({...p,orders:p.orders.size,stores:p.stores.size})).sort(sorter('products',{p:x=>x.p,qty:x=>x.qty,orders:x=>x.orders,stores:x=>x.stores,val:x=>x.val}));
+  if(!arr.length){$('nTbl').innerHTML='<div class="empty">No products match these filters.</div>';$('nMore').innerHTML='';return}
+  const top=Math.max(...arr.map(x=>x.qty));
+  let h=`<table><thead><tr>${th('products','p','Product')}${th('products','qty','Units','num')}<th class="hide-m" scope="col"></th>${th('products','orders','Orders','num')}${th('products','stores','Stores','num')}${th('products','val','Value','num')}</tr></thead><tbody>`;
+  arr.forEach(x=>{h+=`<tr><td><button class="link" type="button" data-prod="${esc(x.p)}">${esc(x.p)}</button></td><td class="num">${int.format(x.qty)}</td><td class="hide-m"><div class="meter"><i style="width:${(x.qty/top*100).toFixed(1)}%"></i></div></td><td class="num">${x.orders}</td><td class="num">${x.stores}</td><td class="num">${gbp.format(x.val)}</td></tr>`});
+  $('nTbl').innerHTML=h+'</tbody></table>';
+  $('nMore').textContent=`${arr.length} products. Click a product to see the orders it appears in.`;
 }
 function render(){
-  const rows=filtered(false);
-  kpis(rows);chart();
-  $('jnJobs').textContent=int.format(rows.length);
-  $('jnProds').textContent=S.prod?1:new Set(rows.flatMap(j=>j.l.map(l=>l[0]).filter(n=>n&&!isCarrier(n)))).size;
-  document.querySelectorAll('#jTabs .tab').forEach(t=>t.setAttribute('aria-selected',t.dataset.t===S.tab));
-  ({jobs:jobsTable,products:prodTable,years:yearTable})[S.tab](rows);
-  document.querySelectorAll('#jYears .chip').forEach(c=>c.setAttribute('aria-pressed',c.dataset.p===S.preset));
-  $('jFrom').value=S.from;$('jTo').value=S.to;$('jProd').value=S.prod;
+  const rows=filtered();
+  kpis(rows);
+  $('nnOrders').textContent=int.format(rows.length);
+  $('nnStores').textContent=new Set(rows.map(o=>o.s)).size;
+  $('nnProds').textContent=S.prod?1:new Set(rows.flatMap(o=>o.l.map(l=>l[0]))).size;
+  document.querySelectorAll('#nTabs .tab').forEach(t=>t.setAttribute('aria-selected',t.dataset.t===S.tab));
+  ({orders:ordersTable,stores:storesTable,products:prodTable})[S.tab](rows);
+  $('nStore').value=S.store;$('nProd').value=S.prod;
 }
 const reset=()=>{S.limit=50;S.open.clear()};
-const setYear=y=>{S.preset=y;S.from=y==='all'?'':y+'-01-01';S.to=y==='all'?'':y+'-12-31'};
-$('jProd').addEventListener('change',e=>{S.prod=e.target.value;reset();render()});
-$('jYears').addEventListener('click',e=>{const c=e.target.closest('.chip');if(!c)return;setYear(c.dataset.p);reset();render()});
-$('jFrom').addEventListener('change',e=>{S.from=e.target.value;S.preset='custom';reset();render()});
-$('jTo').addEventListener('change',e=>{S.to=e.target.value;S.preset='custom';reset();render()});
-$('jReset').addEventListener('click',()=>{Object.assign(S,{chan:'all',prod:'',from:'',to:'',preset:'all'});reset();render()});
-$('jSeg').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;S.measure=b.dataset.m;$('jSeg').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));chart()});
-$('jChart').addEventListener('click',e=>{const r=e.target.closest('rect');if(!r)return;const k=r.dataset.k;const [y,m]=k.split('-').map(Number);S.from=k+'-01';S.to=k+'-'+String(new Date(Date.UTC(y,m,0)).getUTCDate()).padStart(2,'0');S.preset='custom';reset();render()});
-$('jTabs').addEventListener('click',e=>{const t=e.target.closest('.tab');if(!t)return;S.tab=t.dataset.t;reset();render()});
-$('jTbl').addEventListener('click',e=>{
+$('nStore').addEventListener('change',e=>{S.store=e.target.value;reset();render()});
+$('nProd').addEventListener('change',e=>{S.prod=e.target.value;reset();render()});
+$('nReset').addEventListener('click',()=>{S.store='';S.prod='';reset();render()});
+$('nTabs').addEventListener('click',e=>{const t=e.target.closest('.tab');if(!t)return;S.tab=t.dataset.t;reset();render()});
+$('nTbl').addEventListener('click',e=>{
   const s=e.target.closest('th.sort');
-  if(s){const t=s.dataset.tab,k=s.dataset.sort,c=S.sort[t];S.sort[t]=[k,c[0]===k?-c[1]:(['p','who'].includes(k)?1:-1)];render();return}
-  const p=e.target.closest('[data-prod]');if(p){S.prod=p.dataset.prod;S.tab='jobs';reset();render();return}
-  const y=e.target.closest('[data-year]');if(y){setYear(y.dataset.year);S.tab='jobs';reset();render();return}
-  const r=e.target.closest('.row');if(r){const n=+r.dataset.j;S.open.has(n)?S.open.delete(n):S.open.add(n);render()}
+  if(s){const t=s.dataset.tab,k=s.dataset.sort,c=S.sort[t];S.sort[t]=[k,c[0]===k?-c[1]:(['s','p','ob','r'].includes(k)?1:-1)];render();return}
+  const st=e.target.closest('[data-store]');if(st){S.store=st.dataset.store;S.tab='orders';reset();render();return}
+  const p=e.target.closest('[data-prod]');if(p){S.prod=p.dataset.prod;S.tab='orders';reset();render();return}
+  const r=e.target.closest('.row');if(r){const n=+r.dataset.r;S.open.has(n)?S.open.delete(n):S.open.add(n);render()}
 });
-$('jTbl').addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.classList.contains('row')){e.preventDefault();const n=e.target.dataset.j;e.target.click();requestAnimationFrame(()=>document.querySelector(`.row[data-j="${n}"]`)?.focus())}});
-$('jMore').addEventListener('click',e=>{if(e.target.dataset.more){S.limit+=100;render()}if(e.target.dataset.all){S.limit=1e9;render()}});
-let rt;window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{if(!$('viewJobs').hidden)chart()},120)});
+$('nTbl').addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.classList.contains('row')){e.preventDefault();const n=e.target.dataset.r;e.target.click();requestAnimationFrame(()=>document.querySelector(`.row[data-r="${n}"]`)?.focus())}});
+$('nMore').addEventListener('click',e=>{if(e.target.dataset.more){S.limit+=100;render()}if(e.target.dataset.all){S.limit=1e9;render()}});
 render();
 }
 
@@ -663,7 +612,7 @@ async function derive(pass){
 }
 function open(data){lock.remove();document.body.classList.remove('locked');
   if(Array.isArray(data)){start(data);document.querySelector('.views').hidden=true;return}
-  start(data.o);startJobs(data.j);}
+  start(data.o);if(data.n)startNon(data.n);else document.querySelector('.views').hidden=true;}
 (async()=>{
   try{const raw=localStorage.getItem(KEY_STORE);if(raw){const key=await crypto.subtle.importKey('raw',b64(raw),'AES-GCM',true,['decrypt']);open(await decryptWith(key));return}}catch(e){try{localStorage.removeItem(KEY_STORE)}catch(_){}}
   lock.hidden=false;pw.focus();
